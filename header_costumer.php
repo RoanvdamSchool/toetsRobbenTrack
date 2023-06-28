@@ -31,5 +31,6 @@
             <h1 id="webAppName">track and treat</h1>
             <a href="company_list.php" class="linkToOtherPage">company list</a>
             <a href="costumer_home.php" class="linkToOtherPage">home</a>
+            <a href="logout.php" class="linkToOtherPage">logout</a>
         </header>
         <main>

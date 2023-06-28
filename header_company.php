@@ -32,5 +32,6 @@
     <body>
         <header>
             <h1 id="webAppName">track and treat</h1>
+            <a href="logout.php" class="linkToOtherPage">logout</a>
         </header>
         <main>

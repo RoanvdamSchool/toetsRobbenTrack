@@ -1,25 +1,46 @@
 <?php
 include_once('header_company.php');
+
+$sql = "SELECT * FROM follow_system WHERE company_id = :user_id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(
+    array(
+        'user_id' => $_SESSION['id']
+    )
+);
+
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+var_dump($result);
+$resultCount = count($result);
+
 ?>
 <div id="likedCompanyContainer" class='col-5 offset-1'>
     <h2 class='text-center mb-3'>your costumers</h2>
     <div id="likedCompanyGrid">
-        <div class="companyContainer">
-            <p>name: costumer_name</p>
-            <p>region: costumer_region</p>
-        </div>
-        
-        <div class="companyContainer">
-        
-        </div>
-        
-        <div class="companyContainer">
-        
-        </div>
-        
-        <div class="companyContainer">
-        
-        </div>
+        <?php
+        $sql = "SELECT * FROM users WHERE user_id = :user_id";
+        $stmt = $pdo->prepare($sql);
+        try {
+            for ($i = 0; $i < $resultCount; $i++) {
+                $stmt->execute(
+                    array(
+                        'user_id' => $result[$i]['costumer_id']
+                    )
+                );
+                $costumers = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($costumers) {
+                    ?>
+                    <div class="companyContainer">
+                        <p>name: <?=$costumers['user_name']?></p>
+                        <p>region: <?=$costumers['user_region']?></p>
+                    </div>
+                    <?php
+                }
+            }
+        } catch (PDOException $e) {
+            echo "<br>" . $e;
+        }
+        ?>
     </div>
 </div>
 <form method="post" id="setLocation">
