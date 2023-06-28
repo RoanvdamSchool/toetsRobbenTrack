@@ -6,6 +6,9 @@
     if (!isset($_SESSION['name']) ) {
         header('location:index.php');
     }
+    if (!$_SESSION['is_company'] == 0) {
+        header('location:company_home.php');
+    }
     
     $serverName = "localhost";
     $user = "root";

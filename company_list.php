@@ -37,8 +37,22 @@ var_dump($_SESSION);
 include_once("footer.php");
 
 if (isset($_POST['follow']) ) {
-    $sql = "INSERT INTO follow_system (costumer_id, company_id) VALUES (?, ?)";
+    $sql = "SELECT * FROM follow_system WHERE costumer_id = :costumer_id AND company_id = :company_id";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['id'], $_POST['id']]);
+    $stmt->execute(
+        array(
+            'costumer_id' => $_SESSION['id'],
+            'company_id' => $_POST['id']
+        )
+    );
+    $has_alreadyFollowed = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($has_alreadyFollowed) {
+        
+    }
+    else {
+        $sql = "INSERT INTO follow_system (costumer_id, company_id) VALUES (?, ?)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_SESSION['id'], $_POST['id']]);
+    }
 }
 ?>
